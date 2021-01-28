@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +78,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
+                deleteAllPets();
                 // Do nothing for now
                 return true;
         }
@@ -94,7 +96,10 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI,values);
     }
-
+    public void deleteAllPets(){
+        int rowsDeleted = getContentResolver().delete(PetEntry.CONTENT_URI,null,null);
+        Log.v("CatalogActivity",rowsDeleted + " rows deleted from database");
+    }
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String [] projection = {
